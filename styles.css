@@ -1,0 +1,46 @@
+body{
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.inputText, #button, #info, #deleteDiv{
+    text-align: center;
+}
+
+#animalType, #animalName, #favoriteFood, .button, #foodToFeed{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#title{
+    text-align: center;
+    color: #0ad3d6;
+}
+
+#list{
+    position: relative;
+    left: 20%;
+    text-align: center;
+}
+
+#updates{
+    position: relative;
+    right: -60%;
+    text-align: center;
+}
+
+#animalsListTitle, #log{
+    color: #08a7bd;
+    width: 20%;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: fixed;
+}
+
+#feedTitle{
+    color: #08a7bd;
+    top: 380px;
+    width: 20%;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: fixed;
+}

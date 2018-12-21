@@ -2,11 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Nina's Aquarium</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="zoo.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-<body>
-<button onClick="run()">button</button>
+<body onLoad="start()">
+<h2 id="title">Welcome to the Aquarium!</h2>
+<div class="inputText">What type of animal do you want to create?</div>
+<select id="animalType">
+    <option>Clownfish</option>
+    <option>Crab</option>
+    <option>Squid</option>
+    <option>Stingray</option>
+    <option>Dolphin</option>
+</select>
+<div class="inputText">What is your animal's name?</div>
+<input type="text" id="animalName">
+<br>
+<button class="button" id="creationbutton">Create animal!</button>
+
+<div class="inputText">What do you want to feed your animals?</div>
+<select id="foodToFeed">
+    <option>Leftovers</option>
+    <option>Algae</option>
+    <option>Shrimp</option>
+    <option>Clams</option>
+    <option>Herring</option>
+</select>
+<button class="button" id="feedingbutton">Feed Animals!</button>
+
+<div id="deleteDiv">
+    <div id="deleteTitle">Which animal do you want to delete?</div>
+    <input type="text" id="delete">
+    <button id="deleteButton" class="button">Delete animal</button>
+</div>
+
+<div id="list">
+    <div id="animalsListTitle">Your animals:</div>
+</div>
+<div id="updates">
+    <div id="log">Zookeeper Log:</div>
+    <div id="feedTitle"></div>
+</div>
 
 </body>
 </html>

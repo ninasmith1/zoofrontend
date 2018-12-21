@@ -1,30 +1,87 @@
 var animalPopulation = 0;
+var allAnimals = [];
 
-function run(){
-    var tigger = new Tiger("Tigger");
-    // tigger.eat("extract of malt");
-    // tigger.eat("kibble");
-    //
-    var pooh = new Bear("Pooh");
-    // pooh.eat("honey");
-    // pooh.eat("meat");
-    //
-    var piglet = new Pig("Piglet");
-    // piglet.eat("acorns");
-    // piglet.eat("slop");
-    //
-    var owl = new Owl("Owl");
-    // owl.eat("knowledge");
-    // owl.eat("spaghetti");
-    //
-    var eeyore = new Donkey("Eeyore");
-    // eeyore.eat("thistles");
-    // eeyore.eat("dandelions");
+$(document).ready(function(){
+    $("#creationbutton").click(function(){
+        createAnimal($("#animalName").val());
+    });
+    $("#feedingbutton").click(function(){
+        feedAnimals($("#foodToFeed").val());
+    });
+    $("#deleteButton").click(function(){
+        deleteAnimal($("#delete").val());
+    });
+});
 
-    var chrisRob = new Zookeeper("Christopher Robin");
-    chrisRob.feedAnimals([tigger, pooh, piglet, owl, eeyore], "sushi");
+function start(){
+    var nemo = new Clownfish("Nemo");
+    var sebastian = new Crab("Sebastian");
+    var inky = new Squid("Inky");
+    var steve = new Stingray("Steve");
+    var flipper = new Dolphin("Flipper");
+    allAnimals.push(nemo, sebastian, inky, steve, flipper);
+    console.log(allAnimals);
+    var newId = "";
+    for(var i = 0; i < allAnimals.length; i++){
+        newId = allAnimals[i].name;
+        $("#animalsListTitle").append('<div class="' + newId + '">' + allAnimals[i].name + " the " + allAnimals[i].constructor.name + "</div>");
+    }
+}
 
-    console.log(Animal.getPopulation());
+function createAnimal(name) {
+    if(name == ""){
+        alert("Please enter a name for your animal");
+    }else{
+        var animal = "";
+        switch ($("#animalType").val()) {
+            case "Clownfish":
+                animal = new Clownfish(name);
+                break;
+            case "Crab":
+                animal = new Crab(name);
+                break;
+            case "Squid":
+                animal = new Squid(name);
+                break;
+            case "Stingray":
+                animal = new Stingray(name);
+                break;
+            case "Dolphin":
+                animal = new Dolphin(name);
+                break;
+        }
+        $("#feedTitle").html("<div>" + animal.name + " the " + animal.constructor.name + " was created!</div>");
+        listAnimals(animal);
+    }
+}
+
+function deleteAnimal(name){
+    for(var i = 0; i < allAnimals.length; i++){
+        if(allAnimals[i].name == name){
+            $("#feedTitle").append("<div>" + name + " the " + allAnimals[i].constructor.name + " was deleted!</div>");
+            allAnimals.splice(i, 1);
+        }
+    }
+    $("." + name).hide();
+}
+
+function feedAnimals(food){
+    $("#feedTitle").html("");
+    for(var i = 0; i < allAnimals.length;i++){
+        allAnimals[i].eat(food);
+    }
+}
+
+function listAnimals(animal){
+    allAnimals.push(animal);
+    console.log(allAnimals);
+    var newId = "";
+    for(var i = 0; i < allAnimals.length; i++){
+        if(allAnimals[i] == animal){
+            newId = allAnimals[i].name;
+            $("#animalsListTitle").append('<div class="' + newId + '">' + allAnimals[i].name + " the " + allAnimals[i].constructor.name + "</div>");
+        }
+    }
 }
 
 class Animal {
@@ -35,12 +92,12 @@ class Animal {
     }
 
     sleep() {
-        console.log(this.name + " sleeps for 8 hours");
+        $("#feedTitle").append("<div>" + this.name + " sleeps and snuggles</div>");
     }
 
     eat(food) {
-        console.log(this.name + " eats " + food);
-        (food === this.favoriteFood) ? console.log("YUM!!! " + this.name + " wants more " + food) : this.sleep();
+        $("#feedTitle").append("<div>" + this.name + " eats " + food + "</div>");
+        (food === this.favoriteFood) ? $("#feedTitle").append("<div>YUM!!! " + this.name + " wants more " + food + "</div>") : this.sleep();
     }
 
     static getPopulation(){
@@ -48,100 +105,66 @@ class Animal {
     }
 }
 
-
-
-
-class Tiger extends Animal {
+class Clownfish extends Animal {
     constructor(name) {
-        super (name, "extract of malt");
+        super (name, "Leftovers");
     }
 }
 
-class Bear extends Animal {
+class Crab extends Animal {
     constructor(name) {
-        super (name, "honey");
+        super (name, "Algae");
     }
     sleep() {
-        console.log(this.name + " hibernates for 4 months");
+        $("#feedTitle").append("<div>" + this.name + " sleeps during the day</div>");
     }
 }
 
-class Pig extends Animal {
+class Squid extends Animal {
     constructor(name){
-        super(name, "acorns");
+        super(name, "Shrimp");
     }
 
     sleep(){
-        console.log(this.name + " sleeps in a beech tree");
+        $("#feedTitle").append("<div>" + this.name + " sleeps in a coral reef</div>");
     }
 }
 
-class Owl extends Animal {
+class Stingray extends Animal {
     constructor(name){
-        super (name, "knowledge");
+        super (name, "Clams");
     }
 
     eat(food){
-        (food === this.favoriteFood) ? super.eat("knowledge") : console.log(this.name + " eats " + food) + console.log("YUCK!!! " + this.name + " will not eat " + food);
+        (food === this.favoriteFood) ? super.eat("Clams") : $("#feedTitle").append("<div>" + this.name + " eats " + food + "</div>") + $("#feedTitle").append("<div>YUCK!!! " + this.name + " will not eat " + food + "</div>");
     }
 }
 
-class Donkey extends Animal {
+class Dolphin extends Animal {
     constructor(name){
-        super(name, "thistles");
+        super(name, "Herring");
     }
 
     sleep(){
-       console.log(this.name + " never sleeps");
+       $("#feedTitle").append("<div>" + this.name + " never sleeps</div>");
     }
 
     eat(food){
-        (food === this.favoriteFood) ? super.eat("thistles") + this.sleep() : console.log(this.name + " eats " + food) + console.log("YUCK!!! " + this.name + " will not eat " + food);
+        (food === this.favoriteFood) ? super.eat("Herring") + this.sleep() : $("#feedTitle").append("<div>" + this.name + " eats " + food + "</div>") + $("#feedTitle").append("<div>YUCK!!! " + this.name + " will not eat " + food + "</div>");
     }
 }
 
-class Zookeeper {
-    constructor(name){
-        this.name = name;
-    }
-
-    feedAnimals(animals, food){
-        console.log(this.name + " is feeding " + food + " to " + animals.length + " of " + animalPopulation + " animals");
-        for(var i = 0; i < animals.length; i++){
-            animals[i].eat(food);
-        }
-    }
-}
-
-// class Shape{
-//
-//     constructor(name) {
+// class Zookeeper {
+//     constructor(name){
 //         this.name = name;
-//         this.special = true;
 //     }
 //
-//     sayName() {
-//         console.log('Hi, I am a ', this.name + '.');
+//     feedAnimals(animals, food){
+//         $("#feedTitle").append(this.name + " is feeding " + food + " to " + animals.length + " of " + animalPopulation + " animals");
+//         for(var i = 0; i < animals.length; i++){
+//             animals[i].eat(food);
+//         }
 //     }
-//
-//     sayHistory() {
-//         console.log("Shapes have a wonderful history.");
-//     }
-// }
-//
-// class Polygon extends Shape {
-//
-//     constructor(height, width) {
-//         super ('Polygon');
-//         this.height = height;
-//         this.width = width;
-//     }
-//
-//     //method #2
-//     sayHistory(){
-//         console.log('"Polygon" is derived from the Greek polus (many) and gonia (angle).');
-//     }
-//
 // }
 
 
